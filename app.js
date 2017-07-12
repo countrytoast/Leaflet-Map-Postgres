@@ -12,11 +12,11 @@ app.get('/', function(req,res){
 
 
 var cn = {
-    host: 'ec2-34-209-200-70.us-west-2.compute.amazonaws.com',
+    host: '',
     port: 5432,
-    database: 'bikedb',
-    user: 'nromano',
-    password: 'Tooter121'
+    database: '',
+    user: '',
+    password: ''
 };
 
 //pg.connect(cn, onConnect);
