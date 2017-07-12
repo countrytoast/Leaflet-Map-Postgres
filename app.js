@@ -12,11 +12,11 @@ app.get('/', function(req,res){
 
 
 var cn = {
-    host: 'ec2-34-209-200-70.us-west-2.compute.amazonaws.com',
+    host: '',
     port: 5432,
-    database: 'bikedb',
-    user: 'nromano',
-    password: 'Tooter121'
+    database: '',
+    user: '',
+    password: ''
 };
 
 //pg.connect(cn, onConnect);
@@ -87,7 +87,7 @@ app.post('/api/users', function(req, res) {
 
 
 
-//shp2pgsql -s 4326 Maryland_Local_Transit__Charm_City_Circulator_Stops.shp bikedb.busStops | psql -h 34.209.200.70:5432 -d bikedb -U nromano
+
 
 
 app.listen(3000, function () {
