@@ -26,8 +26,17 @@ myApp.controller("controller", function($scope, $http, $q){
         return deferred.promise
     }; 
 
+
+    getDataFromGeoJSON = function getDataFromGeoJSON(url){
+        deferred = $q.defer();
+        $.getJSON(url).then(function(r){
+            dingus = r
+        })
+        return deferred.promise
+    }
+
     $scope.dbQuery('./foo').then(function(r){
-        geoJSON = r.data[0].row_to_json;
+        rgeoJSON = r.data[0].row_to_json;
         rba = r;
 
         map = L.map('map', {drawControl: true}).setView([39.287, -76.60986], 13);
@@ -49,16 +58,31 @@ myApp.controller("controller", function($scope, $http, $q){
             shadowSize: [68, 95],
             shadowAnchor: [22, 94]
         });
-    L.geoJSON(geoJSON, {
+    L.geoJSON(rgeoJSON, {
         icon: myIcon
     }).bindPopup(function (layer) {
         return '<h6>'+layer.feature.properties.stop_name+'</h6>'
 
     }).addTo(map);
-
-
-
     })
 
+    //currentStops = getDataFromGeoJSON('https://opendata.arcgis.com/datasets/cf30fef14ac44aad92c135f6fc8adfbe_10.geojson')
 
+    geoJSON = function(){
+        this.type = "FeatureCollection";
+        this.features = [];
+    }
+
+
+    $.getJSON('https://opendata.arcgis.com/datasets/cf30fef14ac44aad92c135f6fc8adfbe_10.geojson').then(function(r){
+        rerrr = r;
+        BaltoCity = new geoJSON;
+        var markers = L.markerClusterGroup();
+        for(var i=0;i<r.features.length; i++){
+            if(r.features[i].properties.County == 'Baltimore City'){
+                BaltoCity.features.push(r.features[i])
+            }
+        }
+        L.geoJSON(BaltoCity).addTo(map);
+    });
 })
